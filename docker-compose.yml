@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mlflow:
+    image: python:3.9
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./mlruns:/app/mlruns
+    command: >
+      bash -c "pip install --upgrade pip &&
+               pip install -r requirements.txt &&
+               mlflow ui --host 0.0.0.0 --port 5000"
+    ports:
+      - "5001:5000"
