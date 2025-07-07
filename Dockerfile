@@ -1,18 +1,17 @@
-# Imagen base con Python
-FROM python:3.9
+FROM python:3.10-slim-bookworm
 
-# Crear directorio de trabajo
 WORKDIR /app
 
-# Copiar todos los archivos del proyecto
-COPY . /app
+COPY . .
 
-# Instalar dependencias
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Update packages and clean up cache to reduce image size and fix CVEs
+RUN apt-get update && apt-get upgrade -y && apt-get install -y build-essential \
+    && pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt \
+    && apt-get remove -y build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Exponer puerto para el MLflow UI
 EXPOSE 5000
 
-# Comando por defecto: ejecutar train.py
 CMD ["python", "train.py"]

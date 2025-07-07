@@ -1,10 +1,19 @@
 # Core
-# python>=3.10
-
 pandas
 scikit-learn
 xgboost
 imblearn
 mlflow
+
+# Generación de datos sintéticos
 rdt
 sdv
+ctgan
+
+# Interpretabilidad
+shap>=0.44.1
+matplotlib
+
+# Utilidades
+joblib
+pyarrow

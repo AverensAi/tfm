@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mlflow:
-    image: python:3.9
+    image: python:3.10
     working_dir: /app
     volumes:
       - .:/app
@@ -13,3 +13,15 @@ services:
                mlflow ui --host 0.0.0.0 --port 5000"
     ports:
       - "5001:5000"
+
+  shap_mlp:
+    image: python:3.10
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -c "pip install --upgrade pip &&
+              pip install pandas numpy scikit-learn imbalanced-learn matplotlib shap joblib pyarrow ctgan &&
+              python interpretacion_shap.py"
+
+

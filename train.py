@@ -17,8 +17,8 @@ import joblib
 import random
 
 
-random.seed(42)
-np.random.seed(42)
+random.seed(1)
+np.random.seed(1)
 
 # Crear carpeta para guardar gráficos y métricas
 os.makedirs("outputs", exist_ok=True)
@@ -29,7 +29,7 @@ from preprocesamiento import preprocesar_datos, seleccionar_variables
 from generadores import generar_datos_ctgan
 from plots import plot_confusion_matrix, plot_roc_curve, plot_feature_importance, generar_tabla_comparativa_f1
 
-def entrenar_modelos(X, y, dataset_name='Original', scoring='f1', test_size=0.2, random_state=42):
+def entrenar_modelos(X, y, dataset_name='Original', scoring='f1', test_size=0.2, random_state=1):
     if isinstance(X, np.ndarray):
         X = pd.DataFrame(X, columns=[f"feature_{i}" for i in range(X.shape[1])])
     
@@ -38,14 +38,14 @@ def entrenar_modelos(X, y, dataset_name='Original', scoring='f1', test_size=0.2,
     parametros_modelos = cargar_parametros_modelos()
 
     modelos = {
-    'LogisticRegression': LogisticRegression(max_iter=1000, random_state=42),
-    'RandomForest': RandomForestClassifier(random_state=42),
-    'XGBoost': XGBClassifier(eval_metric='logloss', random_state=42),
-    'GradientBoosting': GradientBoostingClassifier(random_state=42),
-    'KNN': KNeighborsClassifier(),  # Este no usa random_state
-    'SVC': SVC(probability=True, random_state=42),
-    'NaiveBayes': GaussianNB(),     # No tiene random_state
-    'MLP': MLPClassifier(max_iter=1000, random_state=42)
+    'LogisticRegression': LogisticRegression(max_iter=1000, random_state=1),
+    'RandomForest': RandomForestClassifier(random_state=1),
+    'XGBoost': XGBClassifier(eval_metric='logloss', random_state=1),
+    'GradientBoosting': GradientBoostingClassifier(random_state=1),
+    'KNN': KNeighborsClassifier(),  
+    'SVC': SVC(probability=True, random_state=1),
+    'NaiveBayes': GaussianNB(),     
+    'MLP': MLPClassifier(max_iter=1000, random_state=1)
     }
 
     resultados = []
@@ -163,7 +163,7 @@ if __name__ == "__main__":
         entrenar_modelos(X, y, dataset_name="Original")
 
         print(" Datos con SMOTE")
-        X_smote, y_smote = SMOTE(random_state=42).fit_resample(X, y)
+        X_smote, y_smote = SMOTE(random_state=1).fit_resample(X, y)
         entrenar_modelos(X_smote, y_smote, dataset_name="SMOTE")
 
         print(" Datos con CTGAN")
@@ -171,7 +171,7 @@ if __name__ == "__main__":
         entrenar_modelos(X_ctgan, y_ctgan, dataset_name="CTGAN")
 
         print(" Datos con CTGAN + SMOTE")
-        X_ctgan_smote, y_ctgan_smote = SMOTE(random_state=42).fit_resample(X_ctgan, y_ctgan)
+        X_ctgan_smote, y_ctgan_smote = SMOTE(random_state=1).fit_resample(X_ctgan, y_ctgan)
         entrenar_modelos(X_ctgan_smote, y_ctgan_smote, dataset_name="CTGAN+SMOTE")
 
         print(" Datos con SMOTE + CTGAN")

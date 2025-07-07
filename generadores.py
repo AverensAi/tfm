@@ -7,7 +7,7 @@ import torch
 import random
 import numpy as np
 
-def fijar_seed(seed=42):
+def fijar_seed(seed=1):
     np.random.seed(seed)
     random.seed(seed)
     torch.manual_seed(seed)
@@ -16,7 +16,7 @@ def fijar_seed(seed=42):
 
 
 def generar_datos_ctgan(X, y, target_col="target_bin", selected_features=None, n_samples=300, epochs=300):
-    fijar_seed(42)
+    fijar_seed(1)
     df_ctgan = pd.DataFrame(X, columns=selected_features)
 
     # 1. Eliminar columnas datetime
