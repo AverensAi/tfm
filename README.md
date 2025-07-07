@@ -2,6 +2,8 @@
 
 Este proyecto implementa un pipeline de clasificación para credit scoring utilizando técnicas de generación sintética (SMOTE, CTGAN) y modelos clásicos de machine learning. Incluye integración con MLflow para el seguimiento de experimentos y Docker para entornos reproducibles.
 
+El repositorio completo está disponible en [GitHub](https://github.com/AverensAi/tfm).
+
 ## Estructura del proyecto
 
 - `train.py`: Script principal de entrenamiento y evaluación.
@@ -12,14 +14,29 @@ Este proyecto implementa un pipeline de clasificación para credit scoring utili
 - `requirements.txt`: Librerías necesarias.
 - `outputs/`: Visualizaciones y métricas exportadas en CSV.
 - `mlruns/`: Directorio interno de MLflow.
-- `companies_T_anon.parquet`: Dataset de entrada.
+- `companies_T_anon.parquet`: Dataset de entrada anonimizado.
 - `README.md`: Este archivo.
 
 ## Cómo ejecutar
 
+### 1. Clonar el repositorio
+
 ```bash
-# Construir imagen
+git clone https://github.com/AverensAi/tfm.git
+cd tfm
+
+### 2. Construir la imagen Docker
+
 docker build -t tfm_project .
 
-# Ejecutar entrenamiento dentro del contenedor
+###  3. Ejecutar el entrenamiento
+
 docker run --rm -v $(pwd):/app -w /app tfm_project python train.py
+
+    Asegúrate de tener instalado Docker: https://www.docker.com/products/docker-desktop
+
+### 4. Visualizar resultados
+
+```bash
+mlflow ui --backend-store-uri ./mlruns --port 5000
+# Navega a http://localhost:5000
