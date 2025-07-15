@@ -17,3 +17,4 @@ matplotlib
 # Utilidades
 joblib
 pyarrow
+ipython

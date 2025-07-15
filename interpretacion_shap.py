@@ -165,10 +165,14 @@ def main() -> None:
     # base value para la clase positiva (índice 1)
     base_val_pos = exp.base_values[0][1] if exp.base_values.ndim == 2 else exp.base_values[1]
 
+    # Redondear valores de entrada para que el texto sea legible
+    X_test_df_rounded = X_test_df.copy()
+    X_test_df_rounded = X_test_df_rounded.round(2)  # <- Ajustar el número de decimales
+
     shap.force_plot(
         base_value=base_val_pos,
         shap_values=shap_matrix[0],
-        features=X_test_df.iloc[0],
+        features=X_test_df_rounded.iloc[0],
         show=False,
         matplotlib=True,
     )
@@ -212,7 +216,9 @@ def main() -> None:
     plt.savefig("outputs/dependence_grid.png", dpi=300)
     plt.close()
 
-    # 14) Decision plot ----------------------------------------------------
+    # 14) Decision plot ---------------------------------------------------- 
+
+
     shap.decision_plot(
         base_val_pos,
         shap_matrix,
