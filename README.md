@@ -29,13 +29,13 @@ cd tfm
 ### 2. Construir la imagen Docker
 
 ```bash
-docker build -t tfm_project .
+docker build -t tfm .
 ```
 
 ### 3. Ejecutar el entrenamiento
 
 ```bash
-docker run --rm -v $(pwd):/app -w /app tfm_project python train.py
+docker run --rm -v $(pwd):/app -w /app tfm python train.py
 ```
 
 > Asegúrate de tener instalado Docker: https://www.docker.com/products/docker-desktop
@@ -43,7 +43,7 @@ docker run --rm -v $(pwd):/app -w /app tfm_project python train.py
 ### 4. Interpretar el modelo con SHAP
 
 ```bash
-docker run --rm -v $(pwd):/app -w /app tfm_project python interpretacion_shap.py
+docker run --rm -v $(pwd):/app -w /app tfm python interpretacion_shap.py
 ```
 
 Esto generará:
@@ -62,3 +62,5 @@ mlflow ui --backend-store-uri ./mlruns --port 5000
 ```
 
 Luego abre tu navegador en http://localhost:5000
+
+Si no funciona con el port 5000, pruebe con otro (por ejemplo, 5001, 5002...)
